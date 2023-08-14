@@ -27,10 +27,10 @@ def run(
     training_batch_size: int = 10000,
     num_atoms: int = 10,
     automatic_transforms_enabled: bool = False,
-    z_score_x: bool = True,
-    z_score_theta: bool = True,
-    max_num_epochs: Optional[int] = None,
-  ) -> Tuple[torch.Tensor, int, Optional[torch.Tensor]]:
+    z_score_x: str = "independent",
+    z_score_theta: str = "independent",
+    max_num_epochs: Optional[int] = 2**31 - 1,
+) -> Tuple[torch.Tensor, int, Optional[torch.Tensor]]:
     """Runs (S)NPE from `sbi`
 
     Args:
@@ -57,8 +57,6 @@ def run(
     assert not (num_observation is not None and observation is not None)
 
     log = logging.getLogger(__name__)
-
-    print("################## time again #####################")
 
     if num_rounds == 1:
         log.info(f"Running NPE")
@@ -114,15 +112,13 @@ def run(
         ).train(
             num_atoms=num_atoms,
             training_batch_size=training_batch_size,
-            retrain_from_scratch_each_round=False,
+            retrain_from_scratch=False,
             discard_prior_samples=False,
             use_combined_loss=False,
             show_train_summary=True,
             max_num_epochs=max_num_epochs,
         )
-        posterior = inference_method.build_posterior(
-            density_estimator, sample_with_mcmc=False
-        )
+        posterior = inference_method.build_posterior(density_estimator)
         proposal = posterior.set_default_x(observation)
         posteriors.append(posterior)
 

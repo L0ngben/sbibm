@@ -1,7 +1,16 @@
-# v1.0.8 (next release)
+# v1.1.0 
 
--  Added tests for `get_labels_parameters` and `get_labels_data` (thanks to @psteinb, #39)
--  Two Moons Likelihood for `log=False` fixed (thanks to @michaeldeistler, #41)
+- Fixed Gaussian Mixture task for `simulation_batch_size` > 1 (thanks to @h3jia, #54, #63). Since experiments in the paper were run with a simulation batch size of 1000, this has an effect on the results. We will issue an update of the results.
+- Additional changes for compatibility with `sbi` v0.21.0 (thanks to @bkmi, #60, @janfb #55, #57, #59)
+
+
+# v1.0.8
+
+- Compatibility with `sbi` v0.20.0 and v.0.21.0 (#50)
+- Added tests for `get_labels_parameters` and `get_labels_data` (thanks to @psteinb, #39)
+- Instructions for virtual environment (thanks to @psteinb, #47)
+- Two Moons Likelihood for `log=False` fixed (thanks to @michaeldeistler, #41)
+- Swap `axis` for `dim` in c2st function (thanks to @michaeldeistler, #43)
 
 
 # v1.0.7
